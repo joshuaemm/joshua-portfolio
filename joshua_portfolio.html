@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Joshua Emmanuel J. — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0d0d0d;
+    --paper: #f7f4ef;
+    --cream: #ede9e2;
+    --red: #c0392b;
+    --red-light: #e8d5d3;
+    --gold: #b8973a;
+    --mid: #3a3a3a;
+    --muted: #7a7a7a;
+    --rule: #d0c9be;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.75;
+    overflow-x: hidden;
+  }
+
+  /* ── GRAIN OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.4;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 10vw;
+    position: relative;
+    border-bottom: 1px solid var(--rule);
+    overflow: hidden;
+  }
+
+  .hero::after {
+    content: 'JEJ';
+    position: absolute;
+    right: -2vw;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(140px, 22vw, 320px);
+    font-weight: 900;
+    color: transparent;
+    -webkit-text-stroke: 1px var(--rule);
+    pointer-events: none;
+    user-select: none;
+    line-height: 1;
+  }
+
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards 0.1s;
+  }
+
+  .hero-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(48px, 9vw, 120px);
+    font-weight: 900;
+    line-height: 0.95;
+    color: var(--ink);
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards 0.2s;
+  }
+
+  .hero-name em {
+    font-style: italic;
+    color: var(--red);
+  }
+
+  .hero-tagline {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(18px, 2.5vw, 28px);
+    font-style: italic;
+    color: var(--muted);
+    max-width: 560px;
+    margin-bottom: 48px;
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards 0.35s;
+  }
+
+  .hero-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards 0.5s;
+  }
+
+  .meta-pill {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--mid);
+    border: 1px solid var(--rule);
+    padding: 8px 18px;
+    background: var(--cream);
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 40px;
+    left: 10vw;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards 0.8s;
+  }
+
+  .scroll-hint::before {
+    content: '';
+    width: 40px;
+    height: 1px;
+    background: var(--rule);
+    display: block;
+  }
+
+  /* ── LAYOUT ── */
+  .section {
+    padding: 100px 10vw;
+    border-bottom: 1px solid var(--rule);
+    position: relative;
+  }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    max-width: 60px;
+    height: 1px;
+    background: var(--red);
+    opacity: 0.4;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 5vw, 64px);
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--ink);
+    margin-bottom: 48px;
+  }
+
+  .section-title em {
+    font-style: italic;
+    color: var(--muted);
+  }
+
+  /* ── ABOUT ── */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .about-body p {
+    color: var(--mid);
+    margin-bottom: 20px;
+    font-size: 17px;
+    line-height: 1.85;
+  }
+
+  .about-aside {
+    border-left: 2px solid var(--rule);
+    padding-left: 40px;
+  }
+
+  .aside-block {
+    margin-bottom: 40px;
+  }
+
+  .aside-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+
+  .aside-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    color: var(--ink);
+  }
+
+  /* ── PULL QUOTE ── */
+  .pull-quote {
+    background: var(--cream);
+    border-left: 4px solid var(--red);
+    padding: 32px 40px;
+    margin: 48px 0;
+  }
+
+  .pull-quote p {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(18px, 2vw, 24px);
+    font-style: italic;
+    color: var(--ink);
+    line-height: 1.6;
+  }
+
+  /* ── SKILLS ── */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+  }
+
+  .skill-card {
+    background: var(--paper);
+    padding: 32px;
+    transition: background 0.2s;
+  }
+
+  .skill-card:hover {
+    background: var(--cream);
+  }
+
+  .skill-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+
+  .skill-level {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 12px;
+  }
+
+  .skill-desc {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* ── PROJECTS ── */
+  .project {
+    margin-bottom: 80px;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 60px;
+    align-items: start;
+    padding-bottom: 80px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .project:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .project-left {
+    position: sticky;
+    top: 40px;
+  }
+
+  .project-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 80px;
+    font-weight: 900;
+    color: transparent;
+    -webkit-text-stroke: 1px var(--rule);
+    line-height: 1;
+    margin-bottom: -10px;
+  }
+
+  .project-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+
+  .project-tag {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--red);
+    border: 1px solid var(--red-light);
+    padding: 4px 12px;
+    background: var(--red-light);
+    margin-bottom: 16px;
+  }
+
+  .project-right {}
+
+  .project-meta-row {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--cream);
+  }
+
+  .project-meta-key {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    min-width: 100px;
+  }
+
+  .project-meta-val {
+    font-size: 15px;
+    color: var(--mid);
+  }
+
+  .project-outcome {
+    background: var(--cream);
+    border-left: 3px solid var(--gold);
+    padding: 16px 20px;
+    margin: 24px 0;
+    font-size: 15px;
+    color: var(--mid);
+    font-style: italic;
+  }
+
+  .project-details {
+    list-style: none;
+    margin-top: 16px;
+  }
+
+  .project-details li {
+    padding: 8px 0 8px 24px;
+    border-bottom: 1px solid var(--cream);
+    font-size: 15px;
+    color: var(--mid);
+    position: relative;
+  }
+
+  .project-details li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--red);
+    font-weight: 500;
+  }
+
+  /* ── INVOLVEMENT ── */
+  .involvement-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .involvement-item {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 40px;
+    padding: 32px 0;
+    border-bottom: 1px solid var(--rule);
+    align-items: start;
+  }
+
+  .inv-year {
+    font-family: 'Playfair Display', serif;
+    font-size: 38px;
+    font-weight: 900;
+    color: var(--rule);
+    line-height: 1;
+    padding-top: 4px;
+  }
+
+  .inv-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+
+  .inv-org {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--red);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .inv-desc {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  /* ── WHO I WORK BEST WITH ── */
+  .fit-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+  }
+
+  .fit-col-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .fit-col-title.yes { color: var(--gold); }
+  .fit-col-title.no  { color: var(--muted); }
+
+  .fit-list {
+    list-style: none;
+  }
+
+  .fit-list li {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--cream);
+    font-size: 15px;
+    color: var(--mid);
+    line-height: 1.6;
+    display: flex;
+    gap: 12px;
+    align-items: start;
+  }
+
+  .fit-list li .icon {
+    font-size: 14px;
+    margin-top: 3px;
+    flex-shrink: 0;
+  }
+
+  .fit-list.yes .icon { color: var(--gold); }
+  .fit-list.no  .icon { color: var(--muted); }
+
+  /* ── CTA ── */
+  .cta-section {
+    padding: 100px 10vw;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .cta-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 6vw, 72px);
+    font-weight: 900;
+    line-height: 1;
+    color: var(--ink);
+  }
+
+  .cta-title em {
+    font-style: italic;
+    color: var(--red);
+    display: block;
+  }
+
+  .cta-body {
+    color: var(--mid);
+    font-size: 17px;
+    line-height: 1.85;
+    margin-bottom: 32px;
+  }
+
+  .open-to {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 40px;
+  }
+
+  .open-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 15px;
+    color: var(--mid);
+    padding: 14px 20px;
+    border: 1px solid var(--rule);
+    background: var(--cream);
+    transition: border-color 0.2s, background 0.2s;
+  }
+
+  .open-item:hover {
+    border-color: var(--red);
+    background: var(--red-light);
+  }
+
+  .open-item::before {
+    content: '→';
+    color: var(--red);
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 48px 10vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    border-top: 1px solid var(--rule);
+  }
+
+  .footer-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  .footer-note {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    max-width: 380px;
+    text-align: right;
+    line-height: 1.6;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .about-grid, .fit-grid, .cta-section {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+    .project {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+    .project-left { position: static; }
+    .involvement-item {
+      grid-template-columns: 80px 1fr;
+      gap: 20px;
+    }
+    .inv-year { font-size: 28px; }
+    .footer-note { text-align: left; }
+    .hero { padding: 80px 6vw; }
+    .section { padding: 60px 6vw; }
+    footer { padding: 40px 6vw; }
+    .cta-section { padding: 60px 6vw; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ HERO ══════════════════════════════════════════════════════════ -->
+<header class="hero">
+  <p class="hero-eyebrow">Portfolio — Joshua Emmanuel J.</p>
+  <h1 class="hero-name">Video <em>Editor.</em><br>Creative <em>Explorer.</em></h1>
+  <p class="hero-tagline">I don't just edit videos — I show up fully, every time, from first frame to final render.</p>
+  <div class="hero-meta">
+    <span class="meta-pill">Business Student, 2nd Year</span>
+    <span class="meta-pill">South India</span>
+    <span class="meta-pill">18 Years Old</span>
+    <span class="meta-pill">Open to Freelance</span>
+  </div>
+  <span class="scroll-hint">Scroll to explore</span>
+</header>
+
+<!-- ══ ABOUT ══════════════════════════════════════════════════════════ -->
+<section class="section reveal">
+  <p class="section-label">01 — About</p>
+  <h2 class="section-title">Who I <em>actually</em> am.</h2>
+  <div class="about-grid">
+    <div class="about-body">
+      <p>I'm Joshua — an 18-year-old business student from South India who edits videos, explores photography, writes for fun, and picks up new skills the way most people pick up snacks.</p>
+      <p>Four years into video editing (and still hungry to learn), I've worked with sports brands, MUN conferences, college ambassadors, and church communities — all before finishing my second year of university.</p>
+      <p>What makes me different isn't just a list of skills. It's the energy I bring from the first frame to the final render. Once I'm in, I'm <em>fully</em> in — and I'll start again from scratch without drama if something isn't working.</p>
+      <p>I'm currently building my toolkit — in DaVinci Resolve, in Python, in creative writing, in photography, and in whatever else grabs my attention next.</p>
+    </div>
+    <aside class="about-aside">
+      <div class="aside-block">
+        <p class="aside-label">Based in</p>
+        <p class="aside-value">South India</p>
+      </div>
+      <div class="aside-block">
+        <p class="aside-label">Currently</p>
+        <p class="aside-value">BBA, 2nd Year</p>
+      </div>
+      <div class="aside-block">
+        <p class="aside-label">Primary tool</p>
+        <p class="aside-value">DaVinci Resolve</p>
+      </div>
+      <div class="aside-block">
+        <p class="aside-label">Experience</p>
+        <p class="aside-value">4+ years video editing</p>
+      </div>
+      <div class="aside-block">
+        <p class="aside-label">Status</p>
+        <p class="aside-value">Available for freelance</p>
+      </div>
+    </aside>
+  </div>
+  <div class="pull-quote">
+    <p>"Even after failing at one thing, I can immediately start working from scratch again. Not to boast — just honest self-testimony."</p>
+  </div>
+</section>
+
+<!-- ══ SKILLS ══════════════════════════════════════════════════════════ -->
+<section class="section reveal">
+  <p class="section-label">02 — Skills</p>
+  <h2 class="section-title">What I <em>bring</em> to the table.</h2>
+  <div class="skills-grid">
+    <div class="skill-card">
+      <p class="skill-name">Video Editing</p>
+      <p class="skill-level">★★★☆☆ Amateur</p>
+      <p class="skill-desc">DaVinci Resolve. Reels, promos, event recaps, branded content. Real clients, real deliverables. 4+ years in the chair.</p>
+    </div>
+    <div class="skill-card">
+      <p class="skill-name">Motion Graphics</p>
+      <p class="skill-level">★★☆☆☆ Beginner+</p>
+      <p class="skill-desc">Animated text sequences, title cards, Fusion page basics. Already shipped a fully animated promo for a Google ambassador.</p>
+    </div>
+    <div class="skill-card">
+      <p class="skill-name">Photography</p>
+      <p class="skill-level">★★☆☆☆ Essentials</p>
+      <p class="skill-desc">Personal and street photography. Open to beginner-level event or portrait projects. Always exploring.</p>
+    </div>
+    <div class="skill-card">
+      <p class="skill-name">Content Writing</p>
+      <p class="skill-level">★★☆☆☆ Beginner</p>
+      <p class="skill-desc">Clear, readable, intentional writing. Growing this skill actively alongside everything else.</p>
+    </div>
+    <div class="skill-card">
+      <p class="skill-name">Creative Writing</p>
+      <p class="skill-level">★★☆☆☆ Hobbyist</p>
+      <p class="skill-desc">Poetry, short fiction, scripts, one abandoned novel (it counts). Two poetry competitions entered.</p>
+    </div>
+    <div class="skill-card">
+      <p class="skill-name">Python</p>
+      <p class="skill-level">★☆☆☆☆ Basics</p>
+      <p class="skill-desc">Fundamentals in progress. I like knowing how things work under the hood, even if I'm just starting out.</p>
+    </div>
+    <div class="skill-card">
+      <p class="skill-name">Speed Cubing</p>
+      <p class="skill-level">Sub-1 Minute</p>
+      <p class="skill-desc">Yes, it's here on purpose. Patience, pattern recognition, obsessive practice — the exact same skills that make a good editor.</p>
+    </div>
+    <div class="skill-card" style="background: var(--cream);">
+      <p class="skill-name" style="font-style:italic; color: var(--muted);">Always learning</p>
+      <p class="skill-level" style="color: var(--muted);">Perpetually in progress</p>
+      <p class="skill-desc">The list keeps growing. New skill unlocked roughly every few months.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PROJECTS ══════════════════════════════════════════════════════════ -->
+<section class="section reveal">
+  <p class="section-label">03 — Projects</p>
+  <h2 class="section-title">Real work. <em>Real</em> clients.</h2>
+
+  <!-- Project 1 -->
+  <div class="project reveal">
+    <div class="project-left">
+      <p class="project-num">01</p>
+      <span class="project-tag">Conference Media</span>
+      <h3 class="project-title">VITC MUN 2026 — "We Are Back" Official Reel</h3>
+    </div>
+    <div class="project-right">
+      <div class="project-meta-row"><span class="project-meta-key">Role</span><span class="project-meta-val">Video Editor · USG, Visual Media Team</span></div>
+      <div class="project-meta-row"><span class="project-meta-key">Client</span><span class="project-meta-val">VITC Model United Nations 2026, Chennai</span></div>
+      <div class="project-meta-row"><span class="project-meta-key">Format</span><span class="project-meta-val">1-minute announcement reel</span></div>
+      <div class="project-outcome">The Secretary-General and the entire organising committee were genuinely happy with the output. A follow-up editing assignment has already been indicated.</div>
+      <ul class="project-details">
+        <li>Produced a high-impact 1-minute "We Are Back" reel to announce VITC MUN 2026 to its audience.</li>
+        <li>Served as Under Secretary-General in the Visual Media team — not just as an editor, but as a decision-maker for the conference's visual identity.</li>
+        <li>Previously served as OC in Visual Media for VITC Intra MUN, building the foundation for this leadership role.</li>
+        <li>Balanced energy, pacing, and tone to reflect the gravity and excitement of a Model UN event.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Project 2 -->
+  <div class="project reveal">
+    <div class="project-left">
+      <p class="project-num">02</p>
+      <span class="project-tag">Paid Freelance</span>
+      <h3 class="project-title">Tri2Champ — Sports Brand Promo Videos</h3>
+    </div>
+    <div class="project-right">
+      <div class="project-meta-row"><span class="project-meta-key">Role</span><span class="project-meta-val">Freelance Video Editor</span></div>
+      <div class="project-meta-row"><span class="project-meta-key">Client</span><span class="project-meta-val">Tri2Champ (Triathlon Sports Events), South India</span></div>
+      <div class="project-meta-row"><span class="project-meta-key">Paid</span><span class="project-meta-val">Rs. 1,000 — first commercial engagement</span></div>
+      <div class="project-outcome">Client was "more than happy." Paid on delivery. First real money earned from editing — a milestone that means something.</div>
+      <ul class="project-details">
+        <li>Produced a 1-minute promotional video and a short reel for a registered triathlon sports brand.</li>
+        <li>Captured the speed, grit, and energy of the triathlon world through editing rhythm and music sync.</li>
+        <li>Handled client communication, revision cycles, and final delivery independently — start to finish.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Project 3 -->
+  <div class="project reveal">
+    <div class="project-left">
+      <p class="project-num">03</p>
+      <span class="project-tag">Motion Graphics</span>
+      <h3 class="project-title">Gemini Student Ambassador Promo Video</h3>
+    </div>
+    <div class="project-right">
+      <div class="project-meta-row"><span class="project-meta-key">Role</span><span class="project-meta-val">Commissioned Video Editor</span></div>
+      <div class="project-meta-row"><span class="project-meta-key">Client</span><span class="project-meta-val">Google Gemini Student Ambassador, VIT Chennai</span></div>
+      <div class="project-meta-row"><span class="project-meta-key">Format</span><span class="project-meta-val">Fully animated text-based promotional video</span></div>
+      <div class="project-outcome">Client was very happy. The video served as an official promotional asset for a Google-affiliated student program.</div>
+      <ul class="project-details">
+        <li>Built a fully animated text-based promo — no footage, all motion design doing the heavy lifting.</li>
+        <li>Designed sequences that communicated the program's value clearly and with visual energy.</li>
+        <li>Demonstrated motion graphics capability in a real-world, stakeholder-facing context.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Project 4 -->
+  <div class="project reveal">
+    <div class="project-left">
+      <p class="project-num">04</p>
+      <span class="project-tag">Community / Volunteer</span>
+      <h3 class="project-title">Church YouTube Channel — Ongoing</h3>
+    </div>
+    <div class="project-right">
+      <div class="project-meta-row"><span class="project-meta-key">Role</span><span class="project-meta-val">Volunteer Video Editor</span></div>
+      <div class="project-meta-row"><span class="project-meta-key">Context</span><span class="project-meta-val">Personal Church Community, South India</span></div>
+      <div class="project-meta-row"><span class="project-meta-key">Duration</span><span class="project-meta-val">The beginning of the journey</span></div>
+      <div class="project-outcome">This is where it started. Every principle I use today — pacing, audio sync, storytelling — was first learned here.</div>
+      <ul class="project-details">
+        <li>Edited and produced videos for a community YouTube channel from the very beginning of my editing journey.</li>
+        <li>Built consistency and creative discipline through regular, published, community-facing work.</li>
+        <li>Developed a sense of accountability — when real people watch, you care about getting it right.</li>
+      </ul>
+    </div>
+  </div>
+
+</section>
+
+<!-- ══ INVOLVEMENT ══════════════════════════════════════════════════════════ -->
+<section class="section reveal">
+  <p class="section-label">04 — Roles & Involvement</p>
+  <h2 class="section-title">Where I <em>show up.</em></h2>
+  <div class="involvement-list">
+    <div class="involvement-item">
+      <p class="inv-year">2026</p>
+      <div>
+        <p class="inv-org">VITC MUN 2026 · VIT Chennai</p>
+        <p class="inv-title">Under Secretary-General — Visual Media</p>
+        <p class="inv-desc">A leadership position in one of South India's prominent Model UN conferences. Responsible for visual content strategy and execution — not just delivering edits, but owning the conference's visual identity.</p>
+      </div>
+    </div>
+    <div class="involvement-item">
+      <p class="inv-year">2025</p>
+      <div>
+        <p class="inv-org">VITC Intra MUN · VIT Chennai</p>
+        <p class="inv-title">Organising Committee — Visual Media</p>
+        <p class="inv-desc">Entry point into the Visual Media team. Contributed to conference-level content production and gained experience working in a structured, high-stakes creative environment.</p>
+      </div>
+    </div>
+    <div class="involvement-item">
+      <p class="inv-year">Ongoing</p>
+      <div>
+        <p class="inv-org">Personal · South India</p>
+        <p class="inv-title">Freelance Editor & Creative</p>
+        <p class="inv-desc">Consistent client work alongside studies — from sports brands to student ambassador programs. Building a track record, one project at a time.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ WHO I WORK BEST WITH ══════════════════════════════════════════════════ -->
+<section class="section reveal">
+  <p class="section-label">05 — Fit</p>
+  <h2 class="section-title">Who I work <em>best</em> with.</h2>
+  <div class="fit-grid">
+    <div>
+      <p class="fit-col-title yes">Good fit ✓</p>
+      <ul class="fit-list yes">
+        <li><span class="icon">→</span>You want someone fully invested — not just technically, but emotionally — in your project.</li>
+        <li><span class="icon">→</span>You're fine working with a creator who is honest about his level and compensates with pure effort.</li>
+        <li><span class="icon">→</span>You value communication — briefs, updates, feedback, iteration.</li>
+        <li><span class="icon">→</span>You're willing to give a young, driven creator a real shot at something meaningful.</li>
+        <li><span class="icon">→</span>You need reels, event recaps, promos, motion-text content — or beginner photography work.</li>
+      </ul>
+    </div>
+    <div>
+      <p class="fit-col-title no">Not the right fit ✗</p>
+      <ul class="fit-list no">
+        <li><span class="icon">—</span>You need a senior professional with a decade of polished portfolio work.</li>
+        <li><span class="icon">—</span>You need broadcast-level production or advanced colour grading expertise.</li>
+        <li><span class="icon">—</span>Your timeline is too tight for any back-and-forth.</li>
+        <li><span class="icon">—</span>You're not comfortable with a creator who is still actively growing.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="pull-quote" style="margin-top:48px">
+    <p>"I'm not the right fit if you need a senior professional with a decade of polished work. But if you want someone who will treat your project like it's the most important thing on his to-do list — that's exactly what you'll get."</p>
+  </div>
+</section>
+
+<!-- ══ CTA ══════════════════════════════════════════════════════════ -->
+<section class="cta-section reveal">
+  <div>
+    <p class="section-label" style="margin-bottom:24px">06 — Let's Work</p>
+    <h2 class="cta-title">Let's make<br><em>something.</em></h2>
+  </div>
+  <div>
+    <p class="cta-body">I'm based in South India, available remotely, and very open to hearing about projects — big, small, weird, or beginner-level. If you've read this far, you probably already know if I'm someone you want to work with.</p>
+    <div class="open-to">
+      <div class="open-item">Freelance video editing — reels, promos, event recaps</div>
+      <div class="open-item">Motion graphics (animated text &amp; title sequences)</div>
+      <div class="open-item">Beginner-level photography projects</div>
+      <div class="open-item">Content writing opportunities</div>
+      <div class="open-item">Collaborative work with other student creators</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══════════════════════════════════════════════════════════ -->
+<footer>
+  <p class="footer-name">Joshua Emmanuel J.</p>
+  <p class="footer-note">This portfolio was written honestly. The skill levels listed reflect where I actually am — not where I want to sound like I am. I believe that's a better foundation for good work.</p>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
