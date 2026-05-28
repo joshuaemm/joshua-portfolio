@@ -13,6 +13,7 @@ type Project = {
   outcome: string;
   bullets: string[];
   hidePreview?: boolean;
+  videoUrl?: string;
 };
 
 const projects: Project[] = [
@@ -31,6 +32,7 @@ const projects: Project[] = [
       "Balanced energy, pacing, and tone to reflect the gravity and excitement of a Model UN event.",
       "Previously served as OC in Visual Media for VITC Intra MUN, building the foundation for this leadership role."
     ]
+    ,videoUrl: "/videos/we-are-back.mp4"
   },
   {
     title: "Tri2Champ — Sports Brand Promo Videos",
@@ -46,6 +48,7 @@ const projects: Project[] = [
       "Captured the speed, grit, and energy of the triathlon world through editing rhythm and music sync.",
       "Handled client communication, revision cycles, and final delivery independently from start to finish."
     ]
+    ,videoUrl: "/videos/tri2champ.mp4"
   },
   {
     title: "Gemini Student Ambassador Promo Video",
@@ -61,6 +64,7 @@ const projects: Project[] = [
       "No footage used — all motion design and typography sequences doing the heavy lifting.",
       "Designed sequences that communicated the program's value clearly and with high visual energy."
     ]
+    ,videoUrl: "/videos/gemini-ambassador.mp4"
   },
   {
     title: "Church YouTube Channel Production",
@@ -131,7 +135,8 @@ export default function Projects() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.8, delay: i * 0.05, ease: [0.22, 1, 0.36, 1] }}
-              className="tilt-card group block overflow-hidden rounded-3xl border border-white/10 bg-white/[0.02] p-6 md:p-10"
+              onClick={() => p.videoUrl && window.open(p.videoUrl, "_blank")}
+              className={`tilt-card group block overflow-hidden rounded-3xl border border-white/10 bg-white/[0.02] p-6 md:p-10 ${p.videoUrl ? "cursor-pointer" : ""}`}
             >
               <div className="grid gap-8 md:grid-cols-12 md:items-start">
                 {/* Text Details (Left side) */}
@@ -203,19 +208,32 @@ export default function Projects() {
                     <div
                       className={`relative aspect-[16/10] overflow-hidden rounded-2xl bg-gradient-to-br ${p.color}`}
                     >
-                      <div className="absolute inset-0 bg-grid opacity-30" />
-                      <motion.div
-                        className="absolute inset-0 flex items-center justify-center"
-                        whileHover={{ scale: 1.05 }}
-                        transition={{ duration: 0.4 }}
-                      >
-                        <div
-                          className="font-display text-6xl font-bold md:text-7xl"
-                          style={{ color: p.accent }}
-                        >
-                          {p.title.charAt(0) || "P"}
-                        </div>
-                      </motion.div>
+                      {p.videoUrl ? (
+                        <video
+                          src={p.videoUrl}
+                          autoPlay
+                          loop
+                          muted
+                          playsInline
+                          className="absolute inset-0 h-full w-full object-cover"
+                        />
+                      ) : (
+                        <>
+                          <div className="absolute inset-0 bg-grid opacity-30" />
+                          <motion.div
+                            className="absolute inset-0 flex items-center justify-center"
+                            whileHover={{ scale: 1.05 }}
+                            transition={{ duration: 0.4 }}
+                          >
+                            <div
+                              className="font-display text-6xl font-bold md:text-7xl"
+                              style={{ color: p.accent }}
+                            >
+                              {p.title.charAt(0) || "P"}
+                            </div>
+                          </motion.div>
+                        </>
+                      )}
                       <div className="absolute bottom-3 right-3 rounded-full bg-black/40 px-3 py-1 text-[10px] uppercase tracking-wider text-white/70 backdrop-blur font-mono">
                         {p.year}
                       </div>
